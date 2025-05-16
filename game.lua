@@ -6,7 +6,8 @@ local time = 0
 local stars = {}
 
 function game.load()
-
+    
+    player.load();
     --serve para criar um num aleatorio msm kk
     math.randomseed(os.time() + os.clock() * 100000)
     
