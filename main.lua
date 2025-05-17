@@ -1,6 +1,11 @@
-local game = require("game")
+local game = require("source.game")
+
+
+
 
 function love.load()
+    local screenWidth, screenHeight = love.graphics.getDimensions()
+game.init( screenWidth, screenHeight)
     game.load()
 end
 

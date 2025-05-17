@@ -1,13 +1,22 @@
-local player = require("player")
+local player = require("source.player")
+
+local missionStart = require("source.missionStart")
+
 
 local game = {}
 
 local time = 0
 local stars = {}
 
+function game.init( width, height)
+    player.init(width,height)
+    missionStart.init( width, height)
+end
+
 function game.load()
     
     player.load();
+    missionStart.load()
     --serve para criar um num aleatorio msm kk
     math.randomseed(os.time() + os.clock() * 100000)
     
@@ -26,6 +35,7 @@ end
 function game.update(dt)
 
     player.update(dt)
+    missionStart.update(dt)
 
     -- movimenta cada estrela
     for _, star in ipairs(stars) do 
@@ -51,6 +61,7 @@ function game.draw()
     end
 
     player.draw()
+    missionStart.draw()
     
     time = time + 1
 end

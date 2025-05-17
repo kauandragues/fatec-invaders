@@ -1,3 +1,5 @@
+
+
 local player = {
     x = 100,
     y = 100,
@@ -11,6 +13,13 @@ local player = {
     timePerFrame = 0.15, -- tempo que cada frame fica na tela
     timer = 0
 }
+
+
+function player.init(screen_width, screen_height)
+    player.x = (screen_width - player.frameWidth * 0.3)/ 2
+    player.y = (screen_height - player.frameHeight * 0.2) / 2
+    
+end
 
 function player.load()
     player.spriteSheet = love.graphics.newImage("assets/player.png")
