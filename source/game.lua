@@ -2,7 +2,6 @@ local player = require("source.player")
 
 local missionStart = require("source.missionStart")
 
-
 local game = {}
 
 local time = 0
