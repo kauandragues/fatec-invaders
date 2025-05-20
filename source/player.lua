@@ -1,4 +1,6 @@
-
+Bullet = require("source.bullet")
+local shot = 0
+bullets = {}
 
 local player = {
     x = 100,
@@ -45,6 +47,15 @@ function player.update(dt)
             player.currentFrame = 1
         end
     end
+    if love.keyboard.isDown("z") then
+        if shot == 0 then
+            table.insert(bullets, Bullet:new(player.x + 74, player.y, 0, -1, 300))
+            shot = true
+            shot = 10
+        end
+        shot = shot -1 
+        
+    end
 
     -- Movimento do player (igual antes)
     if love.keyboard.isDown("right") then
@@ -58,6 +69,9 @@ function player.update(dt)
     elseif love.keyboard.isDown("up") then
         player.y = player.y - player.speed * dt
     end
+    for _, bullet in ipairs(bullets) do 
+        bullet:update(dt)
+    end    
 end
 
 function player.draw()
@@ -70,6 +84,11 @@ function player.draw()
         0.3,
         0.2
     )
+
+    for _, bullet in ipairs(bullets) do
+        bullet:draw()
+    end
+
 end
 
 return player
