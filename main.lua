@@ -26,8 +26,8 @@ function love.update(dt)
      if backgroundVideo then
         if not backgroundVideo:isPlaying() then
             backgroundVideo:play()
-        elseif backgroundVideo:tell() >= 23 then
-            backgroundVideo:seek(0)
+        elseif backgroundVideo:tell() >= 59 then
+            backgroundVideo:seek(15)
         end
     end
     if current_state == "game" then

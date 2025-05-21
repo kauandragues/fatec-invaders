@@ -7,6 +7,7 @@ local screen_width, screen_height, flags = love.window.getMode()
 local enemy = {}
 enemy.sprite = nil
 enemy.list = {}
+enemy.tipo = 1;
 
 function enemy.load(linguagem)
     enemy.sprite = love.graphics.newImage("assets/enemy.png")
@@ -23,9 +24,9 @@ function enemy.update(dt, player)
     -- Spawn de inimigos
     time_nascimento = time_nascimento + 0.01
     if time_nascimento >= espera then
-        espera = espera * 0.95
+        espera = espera * 0.8
         dy = dy + 0.3
-        if espera > 0.7 then espera = 1 end
+        if espera <= 0.15 then espera = 0.15 end
         if dy > 3 then dy = 3 end
         time_nascimento = 0
         criar_enemy(dt, player)
@@ -68,7 +69,7 @@ end
 
 function criar_enemy(dt, player)
     table.insert(enemy.list, {
-        x = math.random(player.x-50, player.x+100),
+        x = math.random(player.x-70, player.x+180),
         y = -30,
         speed = 200*dy,
         hp = 1

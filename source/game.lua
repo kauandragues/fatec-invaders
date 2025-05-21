@@ -6,7 +6,6 @@ local inicio_enemy = 2;
 local game = {}
 
 local time = 0
-local stars = {}
 local estado = "jogando"
 local screen_width, screen_height = 800, 600
 
@@ -25,14 +24,6 @@ function game.load()
     math.randomseed(os.time() + os.clock() * 100000)
 
     love.window.setTitle("Quadrado Móvel")
-
-    for i = 1, 200 do
-        table.insert(stars, {
-            x = math.random() * 800,
-            y = math.random(0, 800),
-            speed = math.random(20, 100)
-        })
-    end
 end
 
 function game.update(dt)
@@ -48,14 +39,6 @@ function game.update(dt)
             estado = "gameover"
         end
 
-        for _, star in ipairs(stars) do
-            star.y = star.y + star.speed * dt
-            if star.y > 600 then
-                star.y = 0
-                star.x = math.random() * 800
-            end
-        end    
-
         time = time + dt
 
     elseif estado == "gameover" then
@@ -68,9 +51,6 @@ end
 function game.draw()
     if estado == "jogando" then
         love.graphics.setColor(1, 1, 1)
-        for _, star in ipairs(stars) do
-            love.graphics.rectangle("fill", star.x, star.y, 2, 2)
-        end
 
         player.draw()
         missionStart.draw()
