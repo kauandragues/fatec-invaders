@@ -58,6 +58,8 @@ function game.draw()
         if time >= inicio_enemy then
             enemy.draw()
         end
+        love.graphics.setColor(1,1,1)
+        love.graphics.printf("Pontuação: " .. player.pontuacao_final, 0 , 50,200, "center")
 
     elseif estado == "gameover" then
         love.graphics.setColor(1, 0, 0)

@@ -36,6 +36,7 @@ function enemy.update(dt, player)
     for i = #enemy.list, 1, -1 do
         local e = enemy.list[i]
         if math.abs(e.x - (player.x+50)) < 60 and math.abs(e.y - player.y) < 60 then
+            player.pontuacao_final = player.pontuacao_final + e.pontuacao
             table.remove(enemy.list, i)
         end
         if e.y >= 460 then
@@ -53,6 +54,7 @@ function enemy.update(dt, player)
                 e.hp = e.hp - 1
                 table.remove(player.bullets, j)
                 if e.hp <= 0 then
+                    player.pontuacao_final = player.pontuacao_final + e.pontuacao
                     table.remove(enemy.list, i)
                 end
                 break
@@ -72,7 +74,8 @@ function criar_enemy(dt, player)
         x = math.random(player.x-70, player.x+180),
         y = -30,
         speed = 200*dy,
-        hp = 1
+        hp = 1,
+        pontuacao = 10
     })
 end
 

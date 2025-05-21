@@ -13,7 +13,8 @@ local player = {
     base_monitor3,
     hp = 3,
     bullets = {}, 
-    linguagem
+    linguagem = "lua",
+    pontuacao_final = 0
 }
 
 
