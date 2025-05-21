@@ -1,9 +1,8 @@
--- source/bullet.lua
-local Bullet = {}
+Bullet = {}
 Bullet.__index = Bullet
 
 function Bullet:new(x, y, dx, dy, speed)
-    local self = setmetatable({}, Bullet)
+    self = setmetatable({}, Bullet)
     self.x = x
     self.y = y
     self.dx = dx or 0
