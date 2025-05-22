@@ -11,6 +11,7 @@ function Bullet:new(x, y, dx, dy, speed)
     self.width = 6
     self.height = 10
     self.damage = 10
+    self.sprite = love.graphics.newImage("assets/bullet.png")
     return self
 end
 
@@ -20,8 +21,7 @@ function Bullet:update(dt)
 end
 
 function Bullet:draw()
-    love.graphics.setColor(1,1,1)
-    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+    love.graphics.draw(self.sprite, self.x, self.y, 0, 0.08, 0.08)
 end
 
 return Bullet

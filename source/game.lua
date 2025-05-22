@@ -1,10 +1,13 @@
-local player = require("source.player")
-local enemy = require("source.enemy")
-local missionStart = require("source.missionStart")
+player = require("source.player")
+enemy = require("source.enemy")
+missionStart = require("source.missionStart")
+powerUp = require("source.powerUp")
 local inicio_enemy = 2;
+local espera = 0
 
 local game = {}
-
+local tempoSpawnPowerUp = 0
+local intervaloSpawnPowerUp = 8
 local time = 0
 local estado = "jogando"
 local screen_width, screen_height = 800, 600
@@ -20,6 +23,7 @@ function game.load()
     enemy.load()
     player.load()
     missionStart.load()
+    powerUp.load()
 
     math.randomseed(os.time() + os.clock() * 100000)
 
@@ -28,12 +32,16 @@ end
 
 function game.update(dt)
     if estado == "jogando" then
+        tempoSpawnPowerUp = tempoSpawnPowerUp + dt
+        if tempoSpawnPowerUp >= intervaloSpawnPowerUp then
+            tempoSpawnPowerUp = 0
+            powerUp.spawn()
+        end
+        powerUp.update(dt)
         player.update(dt)
         missionStart.update(dt)
 
-        if time >= inicio_enemy then
-            enemy.update(dt, player)
-        end
+        enemy.update(dt, player)
 
         if player.hp <= 0 then
             estado = "gameover"
@@ -54,6 +62,7 @@ function game.draw()
 
         player.draw()
         missionStart.draw()
+        powerUp.draw()
 
         if time >= inicio_enemy then
             enemy.draw()
@@ -72,9 +81,13 @@ function reiniciarJogo()
     time = 0
     estado = "jogando"
     player.hp = 3
-    player.x = screen_width / 2
-    player.y = screen_height - 100
+    player.x = 300
+    player.y = 300
     enemy.list = {}
+    enemy.time_nascimento = 0;
+    enemy.espera = 2;
+    enemy.dy = 1;
+    player.pontuacao = 0
     missionStart.load()
 end
 

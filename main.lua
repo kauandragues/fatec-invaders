@@ -51,7 +51,7 @@ function love.draw()
     if current_state == "game" then
         local scaleX = love.graphics.getWidth() / backgroundVideo:getWidth()
         local scaleY = love.graphics.getHeight() / backgroundVideo:getHeight()
-        love.graphics.setColor(1, 1, 1, 0.5)
+        love.graphics.setColor(1, 1, 1, 0.3)
         love.graphics.draw(backgroundVideo, 0, 0, 0, scaleX, scaleY)
         
         love.graphics.setColor(1, 1, 1, 1)
