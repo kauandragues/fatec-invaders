@@ -13,7 +13,7 @@ local inicio_enemy = 2
 game.screen_width = love.graphics.getWidth()
 game.screen_height = love.graphics.getHeight()
 
-local pontuacaoParaVitoria = 30
+local pontuacaoParaVitoria = 1000
 
 local gameover
 local vitoria
