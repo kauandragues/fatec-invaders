@@ -1,21 +1,8 @@
 local start_screen = require("source.start_screen")
 local player = require("source.player")
 enemy = require("source.enemy")
-<<<<<<< HEAD
 local missionStart = require("source.missionStart")
 local powerUp = require("source.powerUp")
-=======
-missionStart = require("source.missionStart")
-powerUp = require("source.powerUp")
-
-
-
-
-local utf8 = require("utf8")
-local input_text = ""
-local inicio_enemy = 2;
-local espera = 0
->>>>>>> faa3bf1cdc60717abec960aaeaaa2c1b6bde35e5
 
 local game = {}
 local tempoSpawnPowerUp = 0
@@ -26,7 +13,7 @@ local inicio_enemy = 2
 game.screen_width = love.graphics.getWidth()
 game.screen_height = love.graphics.getHeight()
 
-local pontuacaoParaVitoria = 1000
+local pontuacaoParaVitoria = 30
 
 local gameover
 local vitoria
@@ -81,10 +68,12 @@ function game.update(dt)
         if player.hp <= 0 then
             game.estado = "gameover"
             musicaFundo:pause()
+            gameover:seek(1)
             gameover:play()
         elseif player.pontuacao_final >= pontuacaoParaVitoria then
             game.estado = "vitoria"
             musicaFundo:pause()
+            vitoria:seek(1.5)
             vitoria:play()
         end
 
@@ -114,7 +103,6 @@ function game.draw()
             enemy.draw()
         end
 
-<<<<<<< HEAD
         love.graphics.setColor(173/255,216/255, 230/255)
         love.graphics.printf("Pontuação: " .. player.pontuacao_final, 20, 50, 200, "left")
         love.graphics.printf("Faça 1000 pontos!!", 20, 80, 200, "left")
@@ -124,19 +112,6 @@ function game.draw()
         love.graphics.printf("GAME OVER", 0, game.screen_height / 2 - 50, game.screen_width, "center")
         love.graphics.printf("Sua pontuação final: " .. player.pontuacao_final, 0, game.screen_height / 2, game.screen_width, "center")
         love.graphics.printf("Pressione R para jogar novamente", 0, game.screen_height / 2 + 50, game.screen_width, "center")
-=======
-    
-        
-        
-        
-
-        elseif estado == "gameover" then
-
-
-        love.graphics.setColor(1, 0, 0)
-        love.graphics.printf("GAME OVER", 0, screen_height / 2 - 50, screen_width, "center")
-    
->>>>>>> faa3bf1cdc60717abec960aaeaaa2c1b6bde35e5
 
     elseif game.estado == "vitoria" then
         love.graphics.setColor(0, 1, 0)
@@ -156,6 +131,7 @@ function game:reiniciarJogo()
     -- Resetando variáveis
     time = 0
     game.estado = "jogando"
+    player.linguagem = "Python"
     player.hp = 3
     player.x = game.screen_width / 2 - 30
     player.y = game.screen_height - 100
