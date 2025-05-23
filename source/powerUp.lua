@@ -9,15 +9,35 @@ function powerUp.load()
     powerUp.spriteC = love.graphics.newImage("assets/playerC.png")
     powerUp.spritePython = love.graphics.newImage("assets/playerPython.png")
 
-    math.randomseed(os.time() + os.clock() * 100000)
+    love.math.setRandomSeed(os.time() + os.clock() * 100000)
+end
+
+-- Retorna um tipo que não seja a linguagem atual do player
+local function escolherTipoValido()
+    local tipos = {1, 2, 3}
+    local linguagens = { [1] = "Lua", [2] = "Python", [3] = "C" }
+
+    -- Filtra para tipos diferentes da linguagem atual
+    local tiposValidos = {}
+    for _, t in ipairs(tipos) do
+        if linguagens[t]:lower() ~= player.linguagem:lower() then
+            table.insert(tiposValidos, t)
+        end
+    end
+
+    if #tiposValidos == 0 then
+        return nil -- Todas iguais, talvez não crie power-up
+    end
+
+    return tiposValidos[love.math.random(1, #tiposValidos)]
 end
 
 function powerUp.spawn()
-    local tipo
-    tipo = math.random(1, 3) -- Só linguagens enquanto não tiver tiro melhorado
+    local tipo = escolherTipoValido()
+    if not tipo then return end
 
     local p = {
-        x = math.random(50, 600),
+        x = love.math.random(50, 600),
         y = -50,
         tipo = tipo,
     }
@@ -35,10 +55,10 @@ function powerUp.update(dt)
             table.remove(powerUp.lista, i)
         end
 
-        -- Colisão com o player
+        -- Colisão simples com player
         if math.abs(p.x - player.x) < 30 and math.abs(p.y - player.y) < 30 then
             if p.tipo == 1 then
-                player.linguagem = "lua"
+                player.linguagem = "Lua"
             elseif p.tipo == 2 then
                 player.linguagem = "Python"
             elseif p.tipo == 3 then
@@ -52,13 +72,12 @@ end
 
 function powerUp.draw()
     for _, p in ipairs(powerUp.lista) do
-
-        if p.tipo == 1 and player.linguagem ~= "lua" then
+        if p.tipo == 1 and player.linguagem:lower() ~= "Lua" then
             love.graphics.draw(powerUp.spriteLua, p.x, p.y, 0, 0.1, 0.1)
-        elseif p.tipo == 2 and player.linguagem ~= "Python" then
-            love.graphics.draw(powerUp.spritePython, p.x, p.y, 0, 0.3, 0.3)
-        elseif p.tipo == 3 and player.linguagem ~= "C" then
-            love.graphics.draw(powerUp.spriteC, p.x, p.y, 0, 0.3, 0.3)
+        elseif p.tipo == 2 and player.linguagem:lower() ~= "Python" then
+            love.graphics.draw(powerUp.spritePython, p.x, p.y, 0, 0.2, 0.2)
+        elseif p.tipo == 3 and player.linguagem:lower() ~= "C" then
+            love.graphics.draw(powerUp.spriteC, p.x, p.y, 0, 0.2, 0.2)
         end
     end
 end

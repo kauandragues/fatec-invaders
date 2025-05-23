@@ -1,8 +1,8 @@
-Bullet = {}
+local Bullet = {}
 Bullet.__index = Bullet
 
 function Bullet:new(x, y, dx, dy, speed)
-    self = setmetatable({}, Bullet)
+    local self = setmetatable({}, Bullet)
     self.x = x
     self.y = y
     self.dx = dx or 0
@@ -16,7 +16,7 @@ function Bullet:new(x, y, dx, dy, speed)
 end
 
 function Bullet:update(dt)
-    
+    self.x = self.x + self.dx * self.speed * dt
     self.y = self.y + self.dy * self.speed * dt
 end
 

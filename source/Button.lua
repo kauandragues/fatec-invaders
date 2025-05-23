@@ -1,43 +1,50 @@
---Modulo de botão simples
-
 local Button = {}
-
---Necessario para definir uma classe botão
 Button.__index = Button
 
---Construtor do botão
-function Button:new(x,y,width, height, txt, onClick)
+function Button:new(x, y, width, height, txt, onClick, colors)
     local btn = {
         x = x,
         y = y,
         width = width,
         height = height,
         txt = txt,
-        onClick = onClick
-
+        onClick = onClick,
+        colors = colors or {
+            normal = {0.2, 0.6, 1},
+            hover = {0.1, 0.5, 0.9},
+            text = {1, 1, 1}
+        },
+        isHover = false
     }
-    --Definindo o objeto btn como pertencento a classe botão
     setmetatable(btn, Button)
     return btn
-    
 end
 
+function Button:update(mx, my)
+    self.isHover = mx >= self.x and mx <= self.x + self.width and
+                   my >= self.y and my <= self.y + self.height
+end
 
 function Button:draw()
-    love.graphics.setColor(0.2,0.6,1)
+    if self.isHover then
+        love.graphics.setColor(self.colors.hover)
+    else
+        love.graphics.setColor(self.colors.normal)
+    end
+
     love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
 
-    love.graphics.setColor(1,1,1)
-    love.graphics.printf(self.txt, self.x, self.y+20, self.width, "center")
+    love.graphics.setColor(self.colors.text)
+    local font = love.graphics.getFont()
+    local textHeight = font:getHeight()
+    local textY = self.y + (self.height - textHeight) / 2
+    love.graphics.printf(self.txt, self.x, textY, self.width, "center")
 end
 
---Metodo que le o clique do mouse, checa se a posição do ponteiro é a mesma que a do botão durante o clique
-function Button:mousepressed(x,y,btnType)
-    if btnType == 1 and x >= self.x and x <= self.x + self.width and y >= self.y and y <= self.y + self.height then
+function Button:mousepressed(x, y, btnType)
+    if btnType == 1 and self.isHover then
         self.onClick()
-
-    end 
+    end
 end
 
 return Button
-
