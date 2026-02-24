@@ -6,6 +6,8 @@ Projeto de jogo retro 2D criado em Lua utilizando o framework LÖVE (Love2D). Es
 
 **Visão geral**
 
+<img width="900" height="677" alt="image" src="https://github.com/user-attachments/assets/e922b17e-33f9-4c1f-b7ae-7152e901c303" />
+
 - **Gênero:** Shooter arcade 2D
 - **Tecnologia:** Lua + LÖVE (Love2D)
 - **Plataforma alvo:** Desktop (Windows, macOS, Linux)
